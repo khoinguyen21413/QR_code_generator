@@ -21,3 +21,11 @@ class QRCodeGeneration:
         # Frame2 (bên phải)
         frame2 = tk.Frame(self.root, bg="lightgreen", width=350)
         frame2.pack(side="right", fill="both")
+
+        # Frame 1A (bên trên)
+        frame1a = tk.Frame(frame1, bg= "lightcyan", height= 75)
+        frame1a.pack(fill="both", expand=True)
+
+        # Frame 1B (bên trên)
+        frame1b = tk.Frame(frame1, bg= "thistle", height= 425)
+        frame1b.pack(fill="both", expand=True)
