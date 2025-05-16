@@ -9,7 +9,7 @@ class QRCodeGeneration:
         self.bg_color = "#4AFFB7"
         self.root = root
         self.root.title("QR Code Generator")
-        self.root.geometry("800x500")
+        self.root.geometry("650x400")
         self.root.configure(bg= self.bg_color)
 
         self.create_widgets()
