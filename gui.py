@@ -20,36 +20,36 @@ class QRCodeGeneration:
     
     def create_widgets(self):
         # Frame1 (bên trái)
-        self.frame1 = tk.Frame(self.root, bg=self.bg_color, width=550, height=400)
+        self.frame1 = tk.Frame(self.root, bg="lightblue", width=550, height=400)
         self.frame1.pack(side="left", fill="both", expand=True)
 
         # Frame2 (bên phải)
-        self.frame2 = tk.Frame(self.root, bg=self.bg_color, width=200)
+        self.frame2 = tk.Frame(self.root, bg="lightgreen", width=200)
         self.frame2.pack(side="right", fill="both")
         self.frame2.pack_propagate(False)
 
         # Frame 1A (bên trên)
-        self.frame1a = tk.Frame(self.frame1, bg=self.bg_color, height= 75)
+        self.frame1a = tk.Frame(self.frame1, bg="lightcyan", height= 75)
         self.frame1a.pack(side="top", fill="x", expand=True)  
         self.frame1a.pack_propagate(False)
 
 
         # Frame 1B (giữa)
-        self.frame1b = tk.Frame(self.frame1, bg=self.bg_color, height= 225)
+        self.frame1b = tk.Frame(self.frame1, bg="thistle", height= 225)
         self.frame1b.pack(side="top", fill="x", expand=True)
         self.frame1b.pack_propagate(False)
 
         # Frame 1C (bên dưới)
-        self.frame1c = tk.Frame(self.frame1, bg=self.bg_color, height= 50)
+        self.frame1c = tk.Frame(self.frame1, bg="thistle", height= 50)
         self.frame1c.pack(side="top", fill="x", expand=True)
         self.frame1c.pack_propagate(False)
 
-        radio_frame = tk.Frame(self.frame1a, bg=self.bg_color)
+        radio_frame = tk.Frame(self.frame1a, bg="lightcyan")
         radio_frame.pack(anchor="center", padx=10)
         self.qr_type_var = tk.StringVar(value="text")
-        radio_text = tk.Radiobutton(radio_frame, text="Text", variable=self.qr_type_var, command=self.update_input_fields, value="text", bg=self.bg_color)
-        radio_link = tk.Radiobutton(radio_frame, text="Link", variable=self.qr_type_var, command=self.update_input_fields, value="link", bg=self.bg_color)
-        radio_wifi = tk.Radiobutton(radio_frame, text="Wifi", variable=self.qr_type_var, command=self.update_input_fields, value="wifi", bg=self.bg_color)
+        radio_text = tk.Radiobutton(radio_frame, text="Text", variable=self.qr_type_var, command=self.update_input_fields, value="text", bg="lightcyan")
+        radio_link = tk.Radiobutton(radio_frame, text="Link", variable=self.qr_type_var, command=self.update_input_fields, value="link", bg="lightcyan")
+        radio_wifi = tk.Radiobutton(radio_frame, text="Wifi", variable=self.qr_type_var, command=self.update_input_fields, value="wifi", bg="lightcyan")
 
         radio_text.pack(side="left", padx=10)
         radio_link.pack(side="left", padx=10)
@@ -78,9 +78,10 @@ class QRCodeGeneration:
         btn_generate = tk.Button(self.frame1c, text= "Tạo mã QR", width=40, command=self.generate_qr)
         btn_generate.pack(anchor="w", padx= 10, pady=10)
 
-        # self.qr_display = tk.Label(self.frame2, width=25, height=10, bg="white", relief="solid", borderwidth=1)
-        self.qr_display = tk.Label(self.frame2)
-        self.qr_display.pack(anchor="w", padx=10, pady=10)
+        self.qr_display_none = tk.Label(self.frame2, width=25, height=10, bg="white", relief="solid", borderwidth=1)
+        self.qr_display_none.pack(anchor="w", padx=10, pady=10)
+        self.qr_display = tk.Label(self.frame2, borderwidth=2)
+       # self.qr_display.pack(anchor="w", padx=10, pady=10)
 
         self.btn_save = tk.Button(self.frame2, text= "Lưu mã QR", width= 40, command=self.save_qr)
         
@@ -108,6 +109,8 @@ class QRCodeGeneration:
             self.security_menu.pack(anchor="w", pady=(0,5), padx=10)
 
     def generate_qr(self):
+        self.qr_display_none.pack_forget()
+
         qr_type = self.qr_type_var.get()
         try:
             if qr_type == "text":
@@ -125,7 +128,10 @@ class QRCodeGeneration:
             img_resized = img.resize((200,200))
             img_tk = ImageTk.PhotoImage(img_resized)
             self.qr_display.config(image=img_tk)
-            self.qr_display.image = img_tk
+            self.qr_display.image = img
+
+            self.qr_display.pack(anchor="w", padx=10, pady=10)
+
             self.btn_save.pack(padx= 10, pady= 10)
             self.qr_image = img
         except ValueError as e:
@@ -142,6 +148,18 @@ class QRCodeGeneration:
         else:
             messagebox.showwarning("Chưa tạo QR", "Hãy tạo mã QR trước khi lưu")
 
+    def show_about(self):
+        messagebox.showinfo("About", "QR Code Generator\nPhiên bản: 1\nTác giả: Khoi Nguyen")
+
+    def show_help(self):
+        messagebox.showinfo(
+            "User Guide",
+            "👉 Cách dùng QR Code Generator:\n\n"
+            "1. Nhập đầy đủ dữ liệu cần thiết.\n"
+            "2. Nhấn vào nút 'Tạo mã QR' để tạo mã QR.\n"
+            "3. Nhấn vào nút 'Lưu mã QR' để lưu mã QR."
+        )
+
     def create_menu(self):
         menu_bar = tk.Menu(self.root)
 
@@ -153,8 +171,8 @@ class QRCodeGeneration:
         menu_bar.add_cascade( label="File", menu=file_menu)
 
         help_menu = tk.Menu(menu_bar, tearoff=0)
-        help_menu.add_command(label="Thông tin")
-        help_menu.add_command(label="Cách dùng")
+        help_menu.add_command(label="Thông tin", command=self.show_about)
+        help_menu.add_command(label="Cách dùng", command=self.show_help)
         menu_bar.add_cascade(label="Hỗ trợ", menu=help_menu)
 
         self.root.config(menu=menu_bar)
