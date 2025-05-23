@@ -4,11 +4,11 @@ import qrcode
 
 def create_qr_image(qr_type, data):
     if qr_type == "text":
-        if not data:
+        if not data or data[0] == '':
             raise ValueError("Vui lòng nhập văn bản")
         qr_data = data[0]
     elif qr_type == "link":
-        if not data:
+        if not data or data[0] == '':
             raise ValueError("Vui lòng nhập url")
         qr_data = data[0]
     elif qr_type == "wifi":
@@ -25,7 +25,7 @@ def create_qr_image(qr_type, data):
         if security == "nopass":
             qr_data = f"WIFI:T:{security};S:{ssid};;"
         else:
-             qr_data = f"WIFI:T:{security};S:{ssid};P:{password};;"
+             qr_data = f"WIFI:S:{ssid};T:{security};P:{password};;"
     else:
         raise ValueError("Loại mã qr không hợp lệ")  
 
