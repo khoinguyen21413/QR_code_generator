@@ -33,14 +33,13 @@ class QRCodeGeneration:
         self.frame1a.pack(side="top", fill="x", expand=True)  
         self.frame1a.pack_propagate(False)
 
-
         # Frame 1B (giữa)
-        self.frame1b = tk.Frame(self.frame1, bg="thistle", height= 225)
+        self.frame1b = tk.Frame(self.frame1, bg="thistle", height= 160)
         self.frame1b.pack(side="top", fill="x", expand=True)
         self.frame1b.pack_propagate(False)
 
         # Frame 1C (bên dưới)
-        self.frame1c = tk.Frame(self.frame1, bg="thistle", height= 50)
+        self.frame1c = tk.Frame(self.frame1, bg="thistle", height= 115)
         self.frame1c.pack(side="top", fill="x", expand=True)
         self.frame1c.pack_propagate(False)
 
@@ -74,6 +73,23 @@ class QRCodeGeneration:
         self.label_type_wifi = tk.Label(self.frame1b, text="Loại bảo mật")
         self.security_var = tk.StringVar(value="WPA")
         self.security_menu = tk.OptionMenu(self.frame1b, self.security_var, "WPA", "WEP", "Nopass")
+
+        label_colour = tk.Label(self.frame1c, text="Vui lòng chọn màu của mã QR")
+        label_colour.pack(anchor="w", padx= 10, pady=10)
+
+        btn_frame = tk.Frame(self.frame1c, bg="thistle")
+        btn_frame.pack(anchor="center", padx= 10)
+
+        self.qr_colour_var = tk.StringVar(value="black")
+        self.btn_black = tk.Radiobutton(btn_frame, text="Black", bg="thistle", variable=self.qr_colour_var, value="black")
+        self.btn_red = tk.Radiobutton(btn_frame, text="Red", bg="thistle", variable=self.qr_colour_var, value="red")
+        self.btn_green = tk.Radiobutton(btn_frame, text="Green", bg="thistle",variable=self.qr_colour_var, value="green")
+        self.btn_blue = tk.Radiobutton(btn_frame, text="Blue", bg="thistle",variable=self.qr_colour_var, value="blue")
+
+        self.btn_black.pack(side="left", padx=10)
+        self.btn_red.pack(side="left", padx=(0,10))
+        self.btn_green.pack(side="left", padx=(0,10))
+        self.btn_blue.pack(side="left", padx=(0,10))
 
         btn_generate = tk.Button(self.frame1c, text= "Tạo mã QR", width=40, command=self.generate_qr)
         btn_generate.pack(anchor="w", padx= 10, pady=10)
@@ -110,7 +126,6 @@ class QRCodeGeneration:
 
     def generate_qr(self):
         self.qr_display_none.pack_forget()
-
         qr_type = self.qr_type_var.get()
         try:
             if qr_type == "text":
