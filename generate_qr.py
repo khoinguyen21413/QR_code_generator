@@ -2,7 +2,7 @@ from PIL import Image, ImageTk
 import io
 import qrcode
 
-def create_qr_image(qr_type, data):
+def create_qr_image(qr_type, data, colour):
     if qr_type == "text":
         if not data or data[0] == '':
             raise ValueError("Vui lòng nhập văn bản")
@@ -33,7 +33,7 @@ def create_qr_image(qr_type, data):
     qr = qrcode.QRCode(version=1, box_size=6, border=2)
     qr.add_data(qr_data)
     qr.make(fit=True)
-    img = qr.make_image(fill_color="black", back_color="white")
+    img = qr.make_image(fill_color=colour, back_color="white")
     return img
 
 def save_qr_image(img,path):

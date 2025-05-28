@@ -125,6 +125,9 @@ class QRCodeGeneration:
             self.security_menu.pack(anchor="w", pady=(0,5), padx=10)
 
     def generate_qr(self):
+        self.qr_display.config(image='')
+        self.qr_display.image = None
+
         self.qr_display_none.pack_forget()
         qr_type = self.qr_type_var.get()
         try:
@@ -138,15 +141,14 @@ class QRCodeGeneration:
                 security = self.security_var.get()
                 data = [ssid, password, security]
                 # data = f"WIFI:S:{ssid};T:{type_wifi};P:{password};;"
-
-            img = generate_qr.create_qr_image(qr_type=qr_type, data=data)
+            colour = self.qr_colour_var.get()
+            img = generate_qr.create_qr_image(qr_type=qr_type, data=data, colour=colour)
             img_resized = img.resize((200,200))
             img_tk = ImageTk.PhotoImage(img_resized)
             self.qr_display.config(image=img_tk)
-            self.qr_display.image = img
+            self.qr_display.image = img_tk
 
             self.qr_display.pack(anchor="w", padx=10, pady=10)
-
             self.btn_save.pack(padx= 10, pady= 10)
             self.qr_image = img
         except ValueError as e:
