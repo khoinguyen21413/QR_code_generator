@@ -43,6 +43,9 @@ class QRCodeGeneration:
         self.frame1c.pack(side="top", fill="x", expand=True)
         self.frame1c.pack_propagate(False)
 
+        label_qr_type = tk.Label(self.frame1a, bg="lightcyan", text="Vui lòng chọn loại của mã QR")
+        label_qr_type.pack(anchor="w", padx=10, pady=(10,0))
+
         radio_frame = tk.Frame(self.frame1a, bg="lightcyan")
         radio_frame.pack(anchor="center", padx=10)
         self.qr_type_var = tk.StringVar(value="text")
@@ -56,26 +59,26 @@ class QRCodeGeneration:
 
         # Nhap lieu 
         # Text
-        self.label_text = tk.Label(self.frame1b, text="Nhập văn bản: ")
+        self.label_text = tk.Label(self.frame1b, bg="thistle", text="Nhập văn bản: ")
         self.entry_text = tk.Entry(self.frame1b, width=40)
 
         # Link
-        self.label_link = tk.Label(self.frame1b, text="Nhập đường dẫn: ")
+        self.label_link = tk.Label(self.frame1b, bg="thistle", text="Nhập đường dẫn: ")
         self.entry_link = tk.Entry(self.frame1b, width=40)
 
         # Wifi
-        self.label_ssid = tk.Label(self.frame1b, text="Nhập tên wifi: ")
+        self.label_ssid = tk.Label(self.frame1b, bg="thistle", text="Nhập tên wifi: ")
         self.entry_ssid = tk.Entry(self.frame1b, width=40)
         
-        self.label_password = tk.Label(self.frame1b, text="Nhập mật khẩu wifi: ")
+        self.label_password = tk.Label(self.frame1b, bg="thistle", text="Nhập mật khẩu wifi: ")
         self.entry_pasword = tk.Entry(self.frame1b, width=40)
         
-        self.label_type_wifi = tk.Label(self.frame1b, text="Loại bảo mật")
+        self.label_type_wifi = tk.Label(self.frame1b, bg="thistle", text="Loại bảo mật")
         self.security_var = tk.StringVar(value="WPA")
         self.security_menu = tk.OptionMenu(self.frame1b, self.security_var, "WPA", "WEP", "Nopass")
 
-        label_colour = tk.Label(self.frame1c, text="Vui lòng chọn màu của mã QR")
-        label_colour.pack(anchor="w", padx= 10, pady=10)
+        label_colour = tk.Label(self.frame1c, bg="thistle", text="Vui lòng chọn màu của mã QR")
+        label_colour.pack(anchor="w", padx= 10, pady=(10,0))
 
         btn_frame = tk.Frame(self.frame1c, bg="thistle")
         btn_frame.pack(anchor="center", padx= 10)
